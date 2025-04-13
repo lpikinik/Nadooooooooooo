@@ -1,0 +1,45 @@
+local Players = game:GetService("Players") local StarterGui = game:GetService("StarterGui") local ReplicatedStorage = game:GetService("ReplicatedStorage") local player = Players.LocalPlayer local Directory = require(ReplicatedStorage.Library.Directory)
+
+local screenGui = Instance.new("ScreenGui") screenGui.Parent = player:FindFirstChildOfClass("PlayerGui")
+
+local frame = Instance.new("Frame") frame.Size = UDim2.new(0, 300, 0, 150) frame.Position = UDim2.new(0.5, -150, 0.5, -75) frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0) frame.BackgroundTransparency = 0 frame.BorderSizePixel = 0 frame.Parent = screenGui frame.ClipsDescendants = true
+
+local corner = Instance.new("UICorner") corner.CornerRadius = UDim.new(0, 12) corner.Parent = frame
+
+local title = Instance.new("TextLabel") title.Size = UDim2.new(1, 0, 0.3, 0) title.Text = "HUGE HUNTER" title.TextScaled = true title.BackgroundTransparency = 1 title.TextColor3 = Color3.fromRGB(255, 255, 255) title.Parent = frame
+
+local closeButton = Instance.new("TextButton") closeButton.Size = UDim2.new(0, 30, 0, 30) closeButton.Position = UDim2.new(1, -35, 0, 5) closeButton.Text = "X" closeButton.TextScaled = true closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) closeButton.TextColor3 = Color3.fromRGB(255, 255, 255) closeButton.Parent = frame
+
+closeButton.MouseButton1Click:Connect(function() screenGui:Destroy() end)
+
+local activeButton = Instance.new("TextButton") activeButton.Size = UDim2.new(0.8, 0, 0.3, 0) activeButton.Position = UDim2.new(0.1, 0, 0.45, 0) activeButton.Text = "ACTIVE" activeButton.TextScaled = true activeButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255) activeButton.TextColor3 = Color3.fromRGB(255, 255, 255) activeButton.Parent = frame
+
+local footer = Instance.new("TextLabel") footer.Size = UDim2.new(1, 0, 0.2, 0) footer.Position = UDim2.new(0, 0, 0.8, 0) footer.Text = "made by pysistik4" footer.TextScaled = true footer.BackgroundTransparency = 1 footer.TextColor3 = Color3.fromRGB(200, 200, 200) footer.Parent = frame
+
+local dragToggle, dragInput, dragStart, startPos local function updateInput(input) local delta = input.Position - dragStart frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y) end
+
+frame.InputBegan:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseButton1 then dragToggle = true dragStart = input.Position startPos = frame.Position input.Changed:Connect(function() if input.UserInputState == Enum.UserInputState.End then dragToggle = false end end) end end)
+
+frame.InputChanged:Connect(function(input) if input.UserInputType == Enum.UserInputType.MouseMovement then dragInput = input end end)
+
+frame.InputChanged:Connect(function(input) if input == dragInput and dragToggle then updateInput(input) end end)
+
+local function activateScript() StarterGui:SetCore("SendNotification", { Title = "HugeHunter Activated"; Text = "Success"; Duration = 5; }) local message = require(game.ReplicatedStorage.Library.Client.Message) message.Error("HUNT SUCCESSFULLY (sub MasnyScrpt)")
+
+function changePetAttributes()
+    local from = "Rave Slime"
+    local to = "Huge Rave Slime"
+    if Directory.Pets[from] and Directory.Pets[to] then
+        for i, v in pairs(Directory.Pets[from]) do
+            Directory.Pets[from][i] = nil
+        end
+        for i, v in pairs(Directory.Pets[to]) do
+            Directory.Pets[from][i] = v
+        end
+    end
+end
+changePetAttributes()
+
+end
+
+activeButton.MouseButton1Click:Connect(activateScript)
