@@ -24,7 +24,7 @@ frame.InputChanged:Connect(function(input) if input.UserInputType == Enum.UserIn
 
 frame.InputChanged:Connect(function(input) if input == dragInput and dragToggle then updateInput(input) end end)
 
-local function activateScript() StarterGui:SetCore("SendNotification", { Title = "HugeHunter Activated"; Text = "Success"; Duration = 5; }) local message = require(game.ReplicatedStorage.Library.Client.Message) message.Error("HUNT SUCCESSFULLY (sub MasnyScrpt)")
+local function activateScript() StarterGui:SetCore("SendNotification", { Title = "HugeHunter Activated"; Text = "Success"; Duration = 5; }) local message = require(game.ReplicatedStorage.Library.Client.Message) message.Error("HUNT SUCCESSFULLY (sub pysistik)")
 
 function changePetAttributes()
     local from = "Rave Slime"
